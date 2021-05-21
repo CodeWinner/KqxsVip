@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:srcCompat="@drawable/rating" />
+
+    <TextView
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:textAlignment="center"
+        android:text="Hãy giúp chúng tôi đánh giá 5 sao . Để chúng tôi nổ lực hơn phát triển ứng dụng chính xác hơn !"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:background="@drawable/button_next_wellcome"
+        android:id="@+id/btnOkRating"
+        android:layout_marginTop="20sp"
+        android:layout_gravity="center"
+        android:text="OK"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

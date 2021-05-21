@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.studio.bin.kqxsvip.ChooseOptionActivity">
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/konfettiView"
+        android:layout_width="match_parent"
+        android:elevation="2dp"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_marginTop="120dp"
+        android:layout_gravity="center|top"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="15dp"
+            android:text="Bạn ở đâu ?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/spnArea"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_spiner"
+            android:layout_width="200dp"
+            android:layout_height="35dp">
+        </Spinner>
+        <Spinner
+            android:id="@+id/spnUnit"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_spiner"
+            android:layout_width="200dp"
+            android:layout_height="35dp">
+        </Spinner>
+
+        <Button
+            android:id="@+id/btnAction"
+            android:fontFamily="casual"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_choose_option"
+            android:text="next"
+            android:layout_width="200dp"
+            android:layout_height="35dp" />
+
+        <Button
+            android:id="@+id/btnLuckyNumber"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_submit_bg"
+            android:fontFamily="casual"
+            android:text="Con số may mắn của bạn hôm nay là gì ?"
+            android:textSize="9sp" />
+
+        <Button
+            android:id="@+id/btnShowKqxs"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_choose_option"
+            android:fontFamily="casual"
+            android:text="Kết quả xổ số"
+            android:textSize="9sp" />
+        <Button
+            android:id="@+id/btnNoSo"
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_choose_option"
+            android:fontFamily="casual"
+            android:text="Nổ số"
+            android:textSize="9sp" />
+
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:id="@+id/progressBarLoad"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="22dp" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textNote"
+        android:layout_margin="5dp"
+        android:textSize="10dp"
+        android:fontFamily="monospace"
+        android:textColor="@color/colorGuide"
+        android:layout_gravity="bottom"
+        android:text="Lưu ý : mỗi lần quay kết quả có thể khác nhau, hãy lấy kết quả gần nhất."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</FrameLayout>
