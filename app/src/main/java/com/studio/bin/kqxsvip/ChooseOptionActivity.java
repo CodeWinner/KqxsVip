@@ -219,8 +219,6 @@ public class ChooseOptionActivity extends AppCompatActivity {
             }
         });
 
-
-
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());
 
@@ -338,6 +336,7 @@ public class ChooseOptionActivity extends AppCompatActivity {
 
             }
         });
+
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

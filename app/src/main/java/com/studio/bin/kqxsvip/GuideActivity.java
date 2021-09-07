@@ -2,6 +2,7 @@ package com.studio.bin.kqxsvip;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -10,9 +11,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -23,6 +35,11 @@ public class GuideActivity extends AppCompatActivity {
     private Button btnNext;
     public ProgressBar progressBar;
 
+    private static final int IMMEDIATE_APP_UPDATE_REQ_CODE = 123;
+
+    private AppUpdateManager appUpdateManager;
+    private InstallStateUpdatedListener installStateUpdatedListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +48,15 @@ public class GuideActivity extends AppCompatActivity {
         btnNext = findViewById(R.id.btnNext);
         progressBar = findViewById(R.id.progressBar);
 
+        appUpdateManager = AppUpdateManagerFactory.create(getApplicationContext());
+        checkUpdate();
+        installStateUpdatedListener = state -> {
+            if (state.installStatus() == InstallStatus.INSTALLED) {
+                removeInstallStateUpdateListener();
+            }
+        };
+        appUpdateManager.registerListener(installStateUpdatedListener);
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,7 +64,6 @@ public class GuideActivity extends AppCompatActivity {
 
                 showChooseActivity();
                 }
-
         });
 
     }
@@ -49,70 +74,44 @@ public class GuideActivity extends AppCompatActivity {
 
             GuideActivity.this.finish();
             overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+    }
+
+    private void checkUpdate() {
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                startUpdateFlow(appUpdateInfo);
+            }
+        });
+    }
+
+    private void startUpdateFlow(AppUpdateInfo appUpdateInfo) {
+        try {
+            appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.IMMEDIATE, this, IMMEDIATE_APP_UPDATE_REQ_CODE);
+        } catch (IntentSender.SendIntentException e) {
+            e.printStackTrace();
         }
-//    public class ForceUpdateAsync extends AsyncTask<String, String, JSONObject> {
-//
-//        private String latestVersion;
-//        private String currentVersion;
-//        private Context context;
-//        public ForceUpdateAsync(String currentVersion, Context context){
-//            this.currentVersion = currentVersion;
-//            this.context = context;
-//        }
-//
-//        @Override
-//        protected JSONObject doInBackground(String... params) {
-//
-//            try {
-//                //context.getPackageName()
-//                latestVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + context.getPackageName() + "&hl=en")
-//                        .timeout(30000)
-//                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-//                        .referrer("http://www.google.com")
-//                        .get()
-//                        .select("div.hAyfc:nth-child(4) > span:nth-child(2) > div:nth-child(1) > span:nth-child(1)")
-//                        .first()
-//                        .ownText();
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return new JSONObject();
-//        }
-//
-//        @Override
-//        protected void onPostExecute(JSONObject jsonObject) {
-//            progressBar.setVisibility(View.GONE);
-//            Log.i("VERSION","latestVersion : " + latestVersion);
-//            Log.i("VERSION","crVersion : " + currentVersion);
-//            if(latestVersion!=null){
-//                Log.i("VERSION","latestVersion : " + latestVersion);
-//                Log.i("VERSION","latestVersion : " + latestVersion);
-//                if(!currentVersion.equalsIgnoreCase(latestVersion)){
-//                            showUpdateActivity();
-//                }else {
-//                    showChooseActivity();
-//                }
-//            }
-//            super.onPostExecute(jsonObject);
-//        }
-//
-//        public void showUpdateActivity(){
-//
-//            Intent intentWC = new Intent(GuideActivity.this, UpdateActivity.class);
-//            startActivity(intentWC);
-//
-//            GuideActivity.this.finish();
-//            overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
-//        }
-//
-//        public void showChooseActivity(){
-//
-//            Intent intentWC = new Intent(GuideActivity.this, ChooseOptionActivity.class);
-//            startActivity(intentWC);
-//
-//            GuideActivity.this.finish();
-//            overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
-//        }
-//    }
+    }
+
+    private void removeInstallStateUpdateListener() {
+        if (appUpdateManager != null) {
+            appUpdateManager.unregisterListener(installStateUpdatedListener);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IMMEDIATE_APP_UPDATE_REQ_CODE) {
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(getApplicationContext(), "Update canceled by user!", Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_OK) {
+                Toast.makeText(getApplicationContext(),"Update success!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Update Failed!", Toast.LENGTH_LONG).show();
+                checkUpdate();
+            }
+        }
+    }
 }

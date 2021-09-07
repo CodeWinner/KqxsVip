@@ -47,7 +47,6 @@
         <activity android:name="com.studio.bin.kqxsvip.ChooseOptionActivity" />
         <activity android:name="com.studio.bin.kqxsvip.ProcessResultActivity" />
         <activity android:name="com.studio.bin.kqxsvip.ShowResultActivity" />
-        <activity android:name="com.studio.bin.kqxsvip.UpdateActivity" />
         <activity android:name="com.studio.bin.kqxsvip.LuckyNumberActivity" />
     </application>
 

@@ -177,15 +177,15 @@ public class ShowResultActivity extends AppCompatActivity implements View.OnClic
                 for (int i = 1; i <= 8; i++) {
                     switch (i) {
                         case 1: // Giai 7
-                            int award71 = random.nextInt(10);
+                            int award71 = random.nextInt(100);
                             result += String.format("%02d", award71);
                             result += " - ";
 
-                            int award72 = random.nextInt(10);
+                            int award72 = random.nextInt(100);
                             result += String.format("%02d", award72);
                             result += " - ";
 
-                            int award73 = random.nextInt(10);
+                            int award73 = random.nextInt(100);
                             result += String.format("%02d", award73);
                             result += " - ";
 

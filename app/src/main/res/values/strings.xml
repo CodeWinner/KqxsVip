@@ -5,7 +5,7 @@
     1/ Đảm bảo kết nối internet.\n Chúng tôi sử hệ thống server khổng lồ đề chạy thuật toán tính toán , vậy nên việc đảm bảo kết nối internet để có thể giúp chúng tôi có thể tính toán một cách chính xác nhất.\n
     2/ Hãy sử dụng ít nhất 3 lần trên ngày .\n Chúng tôi sử dụng AI cho công việc tính toán , vậy nên việc quay nhiều lần trong một ngày sẽ đưa ra những con số chính xác nhất. \n
         Càng quay nhiều tỷ lệ chính xác càng cao.\n\nCuối cùng :  Hãy là một người đam mê với những con số một cách thông minh vì bạn còn có cả gia đình ở phía sau. </string>
-    <string name="secon_note">Lưu ý : mỗi lần quay kết quả có thể khác nhau, hãy lấy kết quả gần nhất.</string>
+    <string name="secon_note">Lưu ý : Kết quả chính xác nhất được chúng tôi cập nhật vào lúc 15h hằng ngày. Trong phần Nổ Số !</string>
     <string name="not_qc">Bạn còn gia đình , hãy chỉ xem lô đề là niềm vui</string>
     <string name="id_app">ca-app-pub-6720811027803589~3245756151</string>
     <string name="id_qc_video">ca-app-pub-6720811027803589/3482803147</string>
